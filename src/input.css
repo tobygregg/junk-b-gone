@@ -1,0 +1,124 @@
+/* Junk-B-Gone – Tailwind source. Build with `npm run build`. */
+
+/* ---------- Fonts (self-hosted, OFL – see assets/fonts) ---------- */
+@font-face { font-family: 'Rokkitt'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/rokkitt-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Rokkitt'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/rokkitt-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Rokkitt'; font-style: normal; font-weight: 800; font-display: swap; src: url('../fonts/rokkitt-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/figtree-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/figtree-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 600; font-display: swap; src: url('../fonts/figtree-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Figtree'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/figtree-latin-700-normal.woff2') format('woff2'); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-paper text-ink font-sans antialiased; text-rendering: optimizeLegibility; }
+  h1, h2, h3, h4 { @apply font-display text-ink; letter-spacing: -0.01em; }
+  ::selection { @apply bg-leaf-200 text-ink; }
+  :focus-visible { outline: 3px solid #467A1C; outline-offset: 3px; border-radius: 6px; }
+  [id] { scroll-margin-top: 5.5rem; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-8; }
+
+  .btn { @apply inline-flex whitespace-nowrap min-h-[48px] items-center justify-center gap-2 rounded-xl px-5 py-3 text-[1.02rem] font-semibold transition duration-200 ease-out; }
+  .btn svg { @apply h-5 w-5 shrink-0; }
+  .btn-primary { @apply bg-rust text-white shadow-[0_3px_0_#5f240f] hover:-translate-y-0.5 hover:bg-rust-700 active:translate-y-0 active:shadow-none; }
+  .btn-green { @apply bg-leaf-700 text-white shadow-[0_3px_0_#2b4c12] hover:-translate-y-0.5 hover:bg-leaf-800 active:translate-y-0 active:shadow-none; }
+  .btn-ghost { @apply border-2 border-ink/15 bg-white text-ink hover:-translate-y-0.5 hover:border-ink/40 active:translate-y-0; }
+
+  .section { @apply py-20 sm:py-24 lg:py-28; }
+  .h2 { @apply text-[2.15rem] font-bold leading-[1.05] sm:text-[2.7rem] lg:text-[3rem]; }
+  .lead { @apply mt-4 max-w-2xl text-[1.08rem] leading-relaxed text-ink-soft sm:text-lg; }
+
+  .nav-link { @apply relative py-2 text-[0.98rem] font-medium text-ink-soft transition-colors hover:text-ink; }
+  .nav-link::after { content: ''; @apply absolute -bottom-0.5 left-0 h-[3px] w-full origin-left scale-x-0 rounded-full bg-leaf transition-transform duration-300; }
+  .nav-link:hover::after { @apply scale-x-100; }
+
+  /* Services explorer – chips on mobile, a vertical list from lg up */
+  .svc-tab { @apply inline-flex min-h-[46px] shrink-0 snap-start items-center gap-3 whitespace-nowrap rounded-full border-2 border-ink/10 bg-white px-4 text-left text-[0.95rem] font-semibold text-ink-soft transition duration-200; }
+  .svc-tab[aria-selected='true'] { @apply border-leaf bg-leaf text-white; }
+  .svc-tab .svc-ic { @apply h-11 w-11 shrink-0 place-items-center rounded-xl bg-white text-leaf-700 ring-1 ring-ink/10 transition duration-200; }
+  @screen lg {
+    .svc-tab { @apply flex w-full whitespace-normal rounded-2xl border-transparent bg-transparent px-3 py-3 text-ink; }
+    .svc-tab:hover { @apply bg-leaf-50; }
+    .svc-tab[aria-selected='true'] { @apply border-leaf bg-leaf-50 text-ink; }
+    .svc-tab[aria-selected='true'] .svc-ic { @apply bg-leaf text-white ring-leaf; }
+  }
+
+  .tick-list li { @apply relative pl-8; }
+  .tick-list li::before { content: ''; @apply absolute left-0 top-[0.2rem] h-5 w-5 rounded-full bg-leaf-100; }
+  .tick-list li::after { content: ''; @apply absolute left-[0.42rem] top-[0.42rem] h-[0.6rem] w-[0.35rem] rotate-45 border-b-[2.5px] border-r-[2.5px] border-leaf-700; }
+
+  .field label { @apply mb-1.5 block text-sm font-semibold text-ink; }
+  .field input, .field select, .field textarea { @apply block w-full rounded-xl border-2 border-ink/15 bg-white px-4 py-3 text-base text-ink transition placeholder:text-ink-muted/70 focus:border-leaf-700 focus:outline-none focus:ring-4 focus:ring-leaf/20; }
+  .field.is-invalid input, .field.is-invalid select, .field.is-invalid textarea { @apply border-rust-500 focus:ring-rust/15; }
+  .field .err { @apply mt-1.5 hidden text-sm font-medium text-rust; }
+  .field.is-invalid .err { @apply block; }
+
+  .faq summary { @apply flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-display text-[1.35rem] font-bold leading-tight text-ink; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq .faq-ic { @apply relative h-9 w-9 shrink-0 rounded-full bg-leaf-50 transition; }
+  .faq .faq-ic::before, .faq .faq-ic::after { content: ''; @apply absolute left-1/2 top-1/2 h-[2.5px] w-3.5 -translate-x-1/2 -translate-y-1/2 rounded bg-leaf-700 transition-transform duration-300; }
+  .faq .faq-ic::after { @apply rotate-90; }
+  .faq details[open] .faq-ic { @apply bg-leaf; }
+  .faq details[open] .faq-ic::before, .faq details[open] .faq-ic::after { @apply bg-white; }
+  .faq details[open] .faq-ic::after { @apply rotate-0; }
+}
+
+/* ---------- Scroll reveals ---------- */
+.js [data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--delay, 0ms); }
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
+
+/* ---------- Header ---------- */
+.site-header { transition: background-color .3s, box-shadow .3s; }
+.site-header.is-scrolled { background-color: rgba(255,255,255,.94); box-shadow: 0 1px 0 rgba(31,42,23,.08), 0 10px 30px -18px rgba(31,42,23,.35); backdrop-filter: saturate(1.4) blur(8px); }
+
+/* ---------- Mobile menu ---------- */
+.mobile-menu { visibility: hidden; opacity: 0; transform: translateY(-8px); transition: opacity .25s ease, transform .3s cubic-bezier(.2,.7,.2,1), visibility 0s .3s; }
+.mobile-menu.is-open { visibility: visible; opacity: 1; transform: none; transition: opacity .25s ease, transform .3s cubic-bezier(.2,.7,.2,1); }
+.menu-btn .bar { transition: transform .3s, opacity .2s; transform-origin: center; }
+.menu-btn[aria-expanded='true'] .bar-1 { transform: translateY(6px) rotate(45deg); }
+.menu-btn[aria-expanded='true'] .bar-2 { opacity: 0; }
+.menu-btn[aria-expanded='true'] .bar-3 { transform: translateY(-6px) rotate(-45deg); }
+
+/* ---------- Hero illustration: the pile clears itself, then comes back ---------- */
+.hero-art .jk { transform-box: fill-box; transform-origin: 50% 100%; animation: jk-clear 12s cubic-bezier(.5,0,.3,1) var(--d) infinite both; }
+.hero-art .puff { transform-box: fill-box; transform-origin: center; opacity: 0; animation: jk-puff 12s ease-out var(--d) infinite both; }
+.hero-art .art-clear { opacity: 0; animation: jk-sparkle 12s ease-in-out infinite; }
+.hero-art .art-gulls { animation: gulls 7s ease-in-out infinite alternate; }
+@keyframes jk-clear {
+  0%, 3% { transform: none; opacity: 1; }
+  10% { transform: translate(10px, -80px) rotate(6deg); opacity: 0; }
+  62% { transform: translateY(-30px); opacity: 0; }
+  66% { transform: translateY(3px); opacity: 1; }
+  68%, 100% { transform: none; opacity: 1; }
+}
+@keyframes jk-puff { 0%, 6% { opacity: 0; transform: scale(.4); } 8% { opacity: 1; } 14% { opacity: 0; transform: scale(1.5) translateY(-10px); } 100% { opacity: 0; } }
+@keyframes jk-sparkle { 0%, 43% { opacity: 0; } 47%, 66% { opacity: 1; } 69%, 100% { opacity: 0; } }
+@keyframes gulls { from { transform: translateX(0); } to { transform: translateX(14px); } }
+
+/* Service panel illustration bob */
+.svc-art { animation: bob 6s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* Step connector draw-in */
+.steps-line { stroke-dasharray: 8 10; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .hero-art .art-clear { opacity: 0; }
+}
+
+/* Hidden service panels must stay hidden even though they use display:grid */
+[data-panel][hidden] { display: none !important; }
+
+/* Mobile action bar slides up once the hero buttons scroll away */
+.js .mobile-bar { transform: translateY(110%); transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.js .mobile-bar.is-shown { transform: none; }
